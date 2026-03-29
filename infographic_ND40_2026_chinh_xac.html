@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1240">
+<title>Infographic NĐ 40/2026/NĐ-CP — Đầy đủ</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%; min-width:960px; overflow-x:auto; }
+.page { width:1240px; min-height:820px; margin:0 auto; background:#fff; display:grid; grid-template-rows:64px auto 28px; }
+
+.header { background:linear-gradient(135deg,#1a3a6b 0%,#0f5a99 60%,#1a6b3a 100%); display:flex; align-items:center; padding:0 18px; gap:14px; border-bottom:3px solid #c5a028; }
+.hdr-emblem { width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
+.hdr-main { flex:1; }
+.hdr-title { font-size:17px;font-weight:700;color:#fff;line-height:1.15; }
+.hdr-sub   { font-size:10.5px;color:#c8dff8;font-style:italic;margin-top:2px; }
+.hdr-pills { display:flex;flex-direction:column;gap:4px;align-items:flex-end; }
+.hdr-pill  { background:rgba(197,160,40,0.25);border:1px solid rgba(197,160,40,0.6);color:#ffe08a;font-size:10px;font-weight:700;padding:3px 10px;border-radius:3px;white-space:nowrap; }
+
+.body { display:grid; grid-template-columns:260px 245px 1fr 220px; overflow:visible; }
+.col { padding:10px; border-right:1px solid #dce4f0; display:flex; flex-direction:column; gap:7px; }
+.col:last-child { border-right:none; }
+
+.sh { display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:5px; }
+.sh.blue   { background:#1a3a6b; } .sh.green { background:#1a6b3a; } .sh.red   { background:#7a1a1a; }
+.sh.teal   { background:#0a5a6a; } .sh.gold  { background:#7a5a00; } .sh.purple{ background:#4a1a6b; }
+.sh-icon { font-size:13px; }
+.sh-text { font-size:10px;font-weight:700;color:#fff;line-height:1.2;flex:1; }
+.sh-art  { font-size:8.5px;color:rgba(255,255,255,0.6);font-style:italic;white-space:nowrap; }
+
+.gt { width:100%;border-collapse:collapse;font-size:8.5px; }
+.gt th { padding:3px 4px;font-size:8px;font-weight:700;color:#fff;text-align:center; }
+.gt td { border:1px solid #d0dae8;padding:2.5px 4px;vertical-align:middle;line-height:1.3;color:#1a2838; }
+.gt tr:nth-child(even) td { background:#f4f7fb; }
+.gt td:first-child { font-weight:700;color:#1a3a6b; }
+.gt.blue   th { background:#1a3a6b; } .gt.green th { background:#1a6b3a; }
+.gt.teal   th { background:#0a5a6a; } .gt.red   th { background:#7a1a1a; }
+
+.cap-wrap { background:#f0f5fb;border:1px solid #c0d0e4;border-radius:5px;padding:6px 7px; }
+.note { background:#fffbe8;border:1px solid #d4c060;border-radius:3px;padding:4px 7px;font-size:8.5px;color:#3a2800;line-height:1.45; }
+
+.pg { display:grid;grid-template-columns:1fr 1fr;gap:4px; }
+.pi { display:flex;gap:5px;align-items:flex-start;background:#f8f5ee;border:1px solid #d8caa0;border-radius:4px;padding:4px 6px; }
+.pi-num { width:15px;height:15px;background:#1a3a6b;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0;margin-top:1px; }
+.pi-text { font-size:9px;color:#2a1a00;line-height:1.3;font-weight:600; }
+
+.pr-list { display:flex;flex-direction:column;gap:3px; }
+.pr-item { display:flex;gap:5px;align-items:flex-start;padding:4px 7px;border-radius:4px;border-left:3px solid #1a3a6b;background:#f5f8fb; }
+.pr-icon { font-size:11px;flex-shrink:0; }
+.pr-text { font-size:8.5px;color:#1a2838;line-height:1.4; }
+
+.stat-row { display:flex;gap:4px; }
+.sb { flex:1;border-radius:5px;padding:6px 5px;text-align:center; }
+.sb.blue  { background:#e8f0f8;border:1px solid #9ab8d8; } .sb.green { background:#e8f5ec;border:1px solid #8ec8a0; }
+.sb.gold  { background:#fdf5e0;border:1px solid #d4b040; } .sb.red   { background:#faeaea;border:1px solid #d09090; }
+.sb-num  { font-size:19px;font-weight:700;line-height:1; } .sb-unit { font-size:8px;font-style:italic;color:#3a5070; }
+.sb-desc { font-size:8px;color:#3a4a5a;margin-top:2px;line-height:1.3; }
+.sb.blue .sb-num { color:#1a3a6b; } .sb.green .sb-num { color:#1a6b3a; }
+.sb.gold .sb-num { color:#7a5a00; } .sb.red   .sb-num { color:#7a1a1a; }
+
+.tt-grid { display:grid;grid-template-columns:1fr 1fr;gap:5px; }
+.tt-box { border:1px solid #d0dae8;border-radius:5px;overflow:hidden; }
+.tt-hdr { background:#0f5a99;color:#fff;font-size:8px;font-weight:700;padding:3px 5px;text-align:center; }
+.tt-row { display:flex;justify-content:space-between;align-items:center;padding:2.5px 5px;border-bottom:1px solid #eef1f5;font-size:8px; }
+.tt-row:last-child { border-bottom:none; }
+.tt-lbl { color:#3a4a5a;flex:1; } .tt-val { font-weight:700;color:#1a3a6b;font-size:9px;flex-shrink:0; }
+
+.auth-box { background:#f8f5ee;border:1px solid #d8caa0;border-radius:5px;padding:6px 8px; }
+.auth-row { display:flex;gap:6px;margin-bottom:5px;align-items:flex-start; }
+.auth-row:last-child { margin-bottom:0; }
+.auth-icon { font-size:15px;flex-shrink:0;margin-top:1px; }
+.auth-title { font-size:9px;font-weight:700;color:#1a3a6b;margin-bottom:2px; }
+.auth-desc  { font-size:8.5px;color:#3a3a3a;line-height:1.4; }
+
+.flow { display:flex;align-items:stretch;gap:2px; }
+.fs { flex:1;background:#f3f7fb;border:1px solid #c8d8ea;border-radius:5px;padding:5px 4px;text-align:center; }
+.fs-num { width:15px;height:15px;background:#1a3a6b;color:#fff;border-radius:50%;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 3px; }
+.fs-title { font-size:7.5px;font-weight:700;color:#1a3a6b;margin-bottom:2px; }
+.fs-desc  { font-size:7px;color:#3a4a5a;line-height:1.3; }
+.fa { display:flex;align-items:center;color:#c5a028;font-size:12px;font-weight:700;flex-shrink:0;padding-top:3px; }
+
+.elec-box { background:linear-gradient(135deg,#e8f5ec,#d0ead8);border:1px solid #6ab87a;border-radius:5px;padding:6px 8px;display:flex;gap:7px;align-items:flex-start; }
+.elec-icon { font-size:18px;flex-shrink:0; }
+.elec-title { font-size:9px;font-weight:700;color:#1a4a1a;margin-bottom:2px; }
+.elec-desc  { font-size:8.5px;color:#2a4a2a;line-height:1.4; }
+
+.tr-list { display:flex;flex-direction:column;gap:3px; }
+.tr-item { display:flex;gap:5px;align-items:flex-start;padding:4px 7px;background:#fdf5e0;border-left:3px solid #c5a028;border-radius:0 4px 4px 0;font-size:8.5px;color:#3a2a00;line-height:1.4; }
+.tr-icon { flex-shrink:0;font-size:10px; }
+
+.pc-title { font-size:8px;font-weight:700;color:#1a3a6b;padding:2px 5px;background:#dde8f5;border-radius:3px;margin-bottom:3px; }
+
+.footer { background:#1a3a6b;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:8.5px;color:rgba(255,255,255,0.4);font-style:italic; }
+.footer strong { color:rgba(255,255,255,0.75);font-style:normal; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="hdr-emblem">⚖️</div>
+  <div class="hdr-main">
+    <div class="hdr-title">NGHỊ ĐỊNH SỐ 40/2026/NĐ-CP — QUY ĐỊNH CHI TIẾT MỘT SỐ ĐIỀU CỦA LUẬT THỦY LỢI</div>
+    <div class="hdr-sub">Chính phủ ban hành 25/01/2026 · Hiệu lực từ 25/01/2026 · Ký: KT. Thủ tướng — Phó Thủ tướng Trần Hồng Hà · Thay thế NĐ 67/2018/NĐ-CP và NĐ 40/2023/NĐ-CP</div>
+  </div>
+  <div class="hdr-pills">
+    <div class="hdr-pill">📌 5 Chương · 35 Điều · 3 Phụ lục</div>
+    <div class="hdr-pill">📎 Căn cứ: Luật Thủy lợi 08/2017/QH14 (được sửa đổi bởi Luật 146/2025/QH15)</div>
+  </div>
+</div>
+
+<div class="body">
+
+<!-- CỘT 1: PHÂN LOẠI + PHÂN CẤP -->
+<div class="col">
+
+  <div class="sh blue"><span class="sh-icon">🏗️</span><span class="sh-text">PHÂN LOẠI CÔNG TRÌNH THỦY LỢI</span><span class="sh-art">Điều 4</span></div>
+  <table class="gt blue">
+    <thead><tr><th>Loại công trình</th><th>Lớn</th><th>Vừa</th><th>Nhỏ</th></tr></thead>
+    <tbody>
+      <tr><td>Trạm bơm tiêu &amp; tưới tiêu KH</td><td>≥ 72.000 m³/h</td><td>3.600–72.000</td><td>&lt; 3.600</td></tr>
+      <tr><td>Trạm bơm tưới</td><td>≥ 12.000 m³/h</td><td>2.000–12.000</td><td>&lt; 2.000</td></tr>
+      <tr><td>Cống (ĐBSCL)</td><td>≥ 20 m rộng</td><td>3–20 m</td><td>&lt; 3 m</td></tr>
+      <tr><td>Cống (vùng còn lại)</td><td>≥ 10 m rộng</td><td>1,5–10 m</td><td>&lt; 1,5 m</td></tr>
+      <tr><td>Bờ bao thủy lợi</td><td>≥ 10.000 ha</td><td>500–10.000 ha</td><td>&lt; 500 ha</td></tr>
+      <tr><td>Hệ thống CT thủy lợi</td><td>≥ 20.000 ha</td><td>2.000–20.000 ha</td><td>&lt; 2.000 ha</td></tr>
+      <tr><td>Đường ống</td><td>≥1,5 m³/s hoặc Ø≥1.000mm</td><td>0,025–1,5 m³/s hoặc Ø100–999mm</td><td>&lt;0,025 m³/s hoặc Ø&lt;100mm</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sh blue"><span class="sh-icon">📊</span><span class="sh-text">PHÂN CẤP CÔNG TRÌNH THỦY LỢI — Nguyên tắc</span><span class="sh-art">Điều 5</span></div>
+  <div class="pr-list">
+    <div class="pr-item"><span class="pr-icon">📐</span><div class="pr-text">Xác định cấp theo <strong>năng lực phục vụ, khả năng trữ nước, đặc tính kỹ thuật và địa chất nền</strong>. Cấp CT là cấp <strong>cao nhất</strong> trong các tiêu chí.</div></div>
+    <div class="pr-item"><span class="pr-icon">🔗</span><div class="pr-text">Cấp CT đầu mối = Cấp CT TL. Hệ thống dẫn/chuyển nước <strong>nhỏ dần theo phạm vi</strong>; cấp dưới nhỏ hơn cấp trên <strong>01 cấp</strong>.</div></div>
+  </div>
+
+  <div class="pc-title">📋 Bảng 1 — Phân cấp theo quy mô, công suất (Phụ lục I)</div>
+  <table class="gt blue">
+    <thead><tr><th>Loại CT</th><th>Tiêu chí</th><th>ĐB</th><th>Cấp I</th><th>Cấp II</th><th>Cấp III</th><th>Cấp IV</th></tr></thead>
+    <tbody>
+      <tr><td>CT cấp nước (tưới) hoặc tiêu thoát</td><td>Diện tích (nghìn ha)</td><td>—</td><td>&gt; 50</td><td>&gt; 10÷50</td><td>&gt; 2÷10</td><td>≤ 2</td></tr>
+      <tr><td>Hồ chứa nước (dung tích MNDBT)</td><td>Dung tích (triệu m³)</td><td>&gt;1.000</td><td>&gt;200÷1.000</td><td>&gt;20÷200</td><td>≥3÷20</td><td>&lt;3</td></tr>
+      <tr><td>CT cấp nước nguồn chưa xử lý</td><td>Lưu lượng (m³/s)</td><td>&gt;20</td><td>&gt;10÷20</td><td>&gt;2÷10</td><td>≤2</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="pc-title">📋 Bảng 2 — Phân cấp theo đặc tính kỹ thuật / chiều cao (Phụ lục I)</div>
+  <table class="gt blue">
+    <thead><tr><th>Loại CT / Nền móng</th><th>ĐB</th><th>Cấp I</th><th>Cấp II</th><th>Cấp III</th><th>Cấp IV</th></tr></thead>
+    <tbody>
+      <tr><td colspan="6" style="background:#dde8f5;color:#1a3a6b;font-weight:700;font-size:7.5px;text-align:center;">ĐẬP ĐẤT, ĐẤT-ĐÁ — Chiều cao đập (m): tính từ nền thấp nhất sau dọn móng đến đỉnh đập</td></tr>
+      <tr><td>Nền đá</td><td>&gt;100</td><td>&gt;70÷100</td><td>&gt;25÷70</td><td>&gt;10÷25</td><td>≤10</td></tr>
+      <tr><td>Nền cát, đất hòn thô, sét cứng–nửa cứng</td><td>—</td><td>&gt;35÷75</td><td>—</td><td>&gt;8÷15</td><td>≤8</td></tr>
+      <tr><td>Nền sét bão hòa, trạng thái dẻo</td><td>—</td><td>—</td><td>&gt;15÷25</td><td>&gt;5÷15</td><td>≤5</td></tr>
+      <tr><td colspan="6" style="background:#dde8f5;color:#1a3a6b;font-weight:700;font-size:7.5px;text-align:center;">ĐẬP BÊ TÔNG, BTCT & CT CHỊU ÁP — Chiều cao đập (m): tính từ đáy chân khay thấp nhất đến đỉnh</td></tr>
+      <tr><td>Nền đá</td><td>&gt;100</td><td>&gt;60÷100</td><td>&gt;25÷60</td><td>&gt;10÷25</td><td>≤10</td></tr>
+      <tr><td>Nền cát, đất hòn thô, sét cứng–nửa cứng</td><td>—</td><td>&gt;25÷50</td><td>&gt;10÷25</td><td>&gt;5÷10</td><td>≤5</td></tr>
+      <tr><td>Nền sét bão hòa, trạng thái dẻo</td><td>—</td><td>—</td><td>&gt;10÷20</td><td>&gt;5÷10</td><td>≤5</td></tr>
+      <tr><td colspan="6" style="background:#dde8f5;color:#1a3a6b;font-weight:700;font-size:7.5px;text-align:center;">TƯỜNG CHẮN — Chiều cao tường (m): tính từ mặt nền phía thấp hơn đến đỉnh tường</td></tr>
+      <tr><td>Nền đá</td><td>—</td><td>&gt;25÷40</td><td>&gt;15÷25</td><td>&gt;8÷15</td><td>≤8</td></tr>
+      <tr><td>Nền cát, đất hòn thô, sét cứng–nửa cứng</td><td>—</td><td>—</td><td>&gt;12÷20</td><td>&gt;5÷12</td><td>≤5</td></tr>
+      <tr><td>Nền sét bão hòa, trạng thái dẻo</td><td>—</td><td>—</td><td>&gt;10÷15</td><td>&gt;4÷10</td><td>≤4</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- end col 1 -->
+
+
+<!-- CỘT 2: NĂNG LỰC -->
+<div class="col">
+
+  <div class="sh blue"><span class="sh-icon">🏢</span><span class="sh-text">YÊU CẦU CHUNG & BỘ PHẬN DOANH NGHIỆP KHAI THÁC</span><span class="sh-art">Điều 6–7</span></div>
+  <div class="note">📌 Phải có <strong>3 bộ phận chuyên trách:</strong> Quản lý CT · Quản lý nước · Quản lý kinh tế. Mỗi bộ phận bố trí <strong>≥ 70%</strong> cán bộ trình độ đại học chuyên ngành phù hợp. Định kỳ <strong>5 năm/lần</strong> đào tạo bồi dưỡng nghiệp vụ (Điều 12).</div>
+
+  <div class="sh blue"><span class="sh-icon">🏊</span><span class="sh-text">NĂNG LỰC TỐI THIỂU — ĐẬP, HỒ CHỨA THỦY LỢI</span><span class="sh-art">Điều 8</span></div>
+  <div class="cap-wrap">
+    <table class="gt blue">
+      <thead><tr><th>Loại đập, hồ chứa</th><th>Nhân sự tối thiểu</th><th>Yêu cầu thêm</th></tr></thead>
+      <tbody>
+        <tr><td>Quan trọng đặc biệt</td><td><strong>7 KS</strong> liên quan TL</td><td>2 người ≥ 5 năm KN</td></tr>
+        <tr><td>Lớn ≥ 50 triệu m³</td><td><strong>5 KS</strong> liên quan TL</td><td>2 người ≥ 5 năm KN</td></tr>
+        <tr><td>Lớn 10–50 triệu m³</td><td><strong>3 KS</strong> liên quan TL</td><td>1 người ≥ 5 năm KN</td></tr>
+        <tr><td>Lớn còn lại</td><td><strong>2 KS</strong> liên quan TL</td><td>Đào tạo nghiệp vụ</td></tr>
+        <tr><td>Vừa ≥ 1 triệu m³</td><td><strong>1 KS</strong> liên quan TL</td><td>Đào tạo nghiệp vụ</td></tr>
+        <tr><td>Vừa còn lại</td><td><strong>1 CĐ</strong> liên quan TL</td><td>Đào tạo nghiệp vụ</td></tr>
+        <tr><td>Nhỏ</td><td><strong>1 người</strong> THPT/CN bậc 2</td><td>Đào tạo nghiệp vụ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sh blue"><span class="sh-icon">⚡</span><span class="sh-text">NĂNG LỰC TỐI THIỂU — TRẠM BƠM ĐIỆN CỐ ĐỊNH</span><span class="sh-art">Điều 9</span></div>
+  <div class="cap-wrap">
+    <div class="pc-title">Trạm bơm tiêu &amp; tưới tiêu kết hợp (Khoản 1–3)</div>
+    <table class="gt blue" style="margin-bottom:4px;">
+      <thead><tr><th>Loại</th><th>Công suất máy bơm</th><th>Yêu cầu tối thiểu</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3">Lớn</td><td>≥ 11.000 m³/h</td><td>1 KS TL + 1 KS cơ/điện, thâm niên ≥ 3 năm</td></tr>
+        <tr><td>8.000–11.000 m³/h</td><td>1 KS TL hoặc cơ/điện, thâm niên ≥ 2 năm</td></tr>
+        <tr><td>4.000–8.000 m³/h</td><td>1 KS TL hoặc cơ/điện, thâm niên ≥ 1 năm</td></tr>
+        <tr><td rowspan="4">Vừa</td><td>≥ 11.000 m³/h</td><td>1 CĐ TL hoặc cơ/điện, ≥ 3 năm</td></tr>
+        <tr><td>8.000–11.000 m³/h</td><td>2 TC TL hoặc cơ/điện, ≥ 3 năm</td></tr>
+        <tr><td>4.000–8.000 m³/h</td><td>2 TC TL hoặc cơ/điện, ≥ 3 năm</td></tr>
+        <tr><td>1.000–4.000 m³/h</td><td>1 TC TL hoặc cơ/điện, ≥ 3 năm</td></tr>
+        <tr><td rowspan="2">Nhỏ</td><td>1.000–4.000 m³/h</td><td>1 CN TL hoặc cơ/điện, ≥ 2 năm</td></tr>
+        <tr><td>540–1.000 m³/h</td><td>1 người vận hành THCS, ≥ 1 năm</td></tr>
+      </tbody>
+    </table>
+    <div class="note">📌 <strong>Trạm bơm tưới (Khoản 4):</strong> Lớn ≥72.000 m³/h → như trạm tiêu Lớn. Lớn 12.000–72.000 và Vừa 3.600–12.000 m³/h → như trạm tiêu Vừa. Vừa &lt;3.600 và Nhỏ → như trạm tiêu Nhỏ.</div>
+  </div>
+
+  <div class="sh blue"><span class="sh-icon">🚰</span><span class="sh-text">NĂNG LỰC TỐI THIỂU — CỐNG ĐẦU MỐI & HỆ THỐNG DẪN NƯỚC</span><span class="sh-art">Điều 10</span></div>
+  <div class="cap-wrap">
+    <table class="gt blue">
+      <thead><tr><th>Loại công trình</th><th>Yêu cầu tối thiểu</th></tr></thead>
+      <tbody>
+        <tr><td>Cống qua đê sông cấp ĐB, I, II; cống lớn ngăn sông vận hành bằng điện</td><td>1 KS TL + 1 KS cơ/điện + 1 TC cơ/điện tại đầu mối, thâm niên ≥ 3 năm</td></tr>
+        <tr><td>Cống ≥ 0,5m; kênh/mương Q ≥ 0,3 m³/s hoặc đáy ≥ 0,5m; đường ống Q ≥ 0,02 m³/s hoặc Ø ≥ 150mm</td><td>Chuyên môn phù hợp quy mô, tối thiểu <strong>tốt nghiệp THPT</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div><!-- end col 2 -->
+
+
+<!-- CỘT 3: GIẤY PHÉP -->
+<div class="col">
+
+  <div class="sh green"><span class="sh-icon">📋</span><span class="sh-text">8 HOẠT ĐỘNG CẦN GIẤY PHÉP TRONG PHẠM VI BẢO VỆ CT THỦY LỢI</span><span class="sh-art">Điều 15</span></div>
+  <div class="pg">
+    <div class="pi"><div class="pi-num">1</div><div class="pi-text">Xây dựng công trình mới</div></div>
+    <div class="pi"><div class="pi-num">2</div><div class="pi-text">Lập bến, bãi tập kết nguyên liệu, nhiên liệu, vật liệu, vật tư, phương tiện</div></div>
+    <div class="pi"><div class="pi-num">3</div><div class="pi-text">Trồng cây lâu năm <span style="color:#1a6b3a;font-weight:700;">(phép tối đa 10 năm)</span></div></div>
+    <div class="pi"><div class="pi-num">4</div><div class="pi-text">Du lịch, thể thao, nghiên cứu KH, kinh doanh, dịch vụ</div></div>
+    <div class="pi"><div class="pi-num">5</div><div class="pi-text">Phương tiện thủy nội địa, phương tiện cơ giới <em>(trừ xe mô tô, xe gắn máy, phương tiện thô sơ)</em></div></div>
+    <div class="pi"><div class="pi-num">6</div><div class="pi-text">Nuôi trồng thủy sản</div></div>
+    <div class="pi"><div class="pi-num">7</div><div class="pi-text">Nổ mìn và các hoạt động gây nổ khác</div></div>
+    <div class="pi"><div class="pi-num">8</div><div class="pi-text">Xây dựng công trình ngầm</div></div>
+  </div>
+
+  <div class="sh green"><span class="sh-icon">⚖️</span><span class="sh-text">NGUYÊN TẮC & CĂN CỨ CẤP PHÉP</span><span class="sh-art">Điều 16–17</span></div>
+  <div class="pr-list">
+    <div class="pr-item"><span class="pr-icon">🛡️</span><div class="pr-text">Bảo đảm an toàn CT, chất lượng nước; không ảnh hưởng nhiệm vụ CT; đảm bảo <strong>quốc phòng, an ninh quốc gia</strong>.</div></div>
+    <div class="pr-item"><span class="pr-icon">📑</span><div class="pr-text">Nhiều hoạt động cùng dự án, cùng cơ quan thẩm quyền → <strong>cấp 1 giấy phép duy nhất</strong>.</div></div>
+    <div class="pr-item"><span class="pr-icon">🚫</span><div class="pr-text">CT xây dựng mới của <strong>dự án sửa chữa, nâng cấp do CQNN thẩm quyền phê duyệt → Không cần cấp phép</strong>.</div></div>
+    <div class="pr-item"><span class="pr-icon">🗺️</span><div class="pr-text"><strong>Căn cứ:</strong> (1) Nhiệm vụ, hiện trạng CT; (2) <strong>Quy hoạch liên quan đến HĐ đề nghị cấp phép</strong>; (3) Tình hình thực hiện phép đã cấp (khi gia hạn).</div></div>
+  </div>
+
+  <div class="sh green"><span class="sh-icon">⏱️</span><span class="sh-text">THỜI HẠN GIẤY PHÉP</span><span class="sh-art">Điều 19</span></div>
+  <div class="stat-row">
+    <div class="sb green"><div class="sb-num">10</div><div class="sb-unit">năm tối đa</div><div class="sb-desc">Trồng cây lâu năm (k3 Đ.15)</div></div>
+    <div class="sb blue"><div class="sb-num">5</div><div class="sb-unit">năm tối đa</div><div class="sb-desc">7 HĐ còn lại (k1,2,4,5,6,7,8)</div></div>
+    <div class="sb gold"><div class="sb-num">3</div><div class="sb-unit">năm/lần</div><div class="sb-desc">Gia hạn tối đa, gia hạn nhiều lần</div></div>
+    <div class="sb red"><div class="sb-num">3</div><div class="sb-unit">tháng</div><div class="sb-desc">Đình chỉ hiệu lực tối đa</div></div>
+  </div>
+
+  <div class="sh green"><span class="sh-icon">📅</span><span class="sh-text">THỜI GIAN XỬ LÝ HỒ SƠ CẤP PHÉP</span><span class="sh-art">Điều 22, 24, 26</span></div>
+  <div class="tt-grid">
+    <div class="tt-box">
+      <div class="tt-hdr">🏛️ CẤP TỈNH — Cấp phép mới</div>
+      <div class="tt-row"><span class="tt-lbl">Xây dựng, bến bãi, CT ngầm (k1,2,8)</span><span class="tt-val">15 ngày</span></div>
+      <div class="tt-row"><span class="tt-lbl">Trồng cây, phương tiện (k3,5)</span><span class="tt-val">7 ngày</span></div>
+      <div class="tt-row"><span class="tt-lbl">Du lịch, nuôi trồng, nổ mìn (k4,6,7)</span><span class="tt-val">10 ngày</span></div>
+      <div class="tt-row" style="background:#f5f8fc;"><span class="tt-lbl">Gia hạn k1,2,8 / k3,5 / k4,6,7</span><span class="tt-val">10/3/7</span></div>
+      <div class="tt-row"><span class="tt-lbl">Cấp lại giấy phép</span><span class="tt-val">3 ngày</span></div>
+    </div>
+    <div class="tt-box">
+      <div class="tt-hdr">🏡 CẤP XÃ (phân cấp) — Cấp phép mới</div>
+      <div class="tt-row"><span class="tt-lbl">Xây dựng, bến bãi, CT ngầm (k1,2,8)</span><span class="tt-val">13 ngày</span></div>
+      <div class="tt-row"><span class="tt-lbl">Trồng cây, phương tiện (k3,5)</span><span class="tt-val">5 ngày</span></div>
+      <div class="tt-row"><span class="tt-lbl">Du lịch, nuôi trồng, nổ mìn (k4,6,7)</span><span class="tt-val">8 ngày</span></div>
+      <div class="tt-row" style="background:#f5f8fc;"><span class="tt-lbl">Gia hạn k1,2,8 / k3,5 / k4,6,7</span><span class="tt-val">8/2/5</span></div>
+      <div class="tt-row"><span class="tt-lbl">Cấp lại giấy phép</span><span class="tt-val">2 ngày</span></div>
+    </div>
+  </div>
+  <div class="note">📌 Nộp trước hạn tối thiểu <strong>25 ngày</strong>. Kiểm tra HS: ngay khi nộp TT, hoặc <strong>1 ngày LV</strong> nếu qua bưu chính/trực tuyến.</div>
+
+  <div class="sh red"><span class="sh-icon">⛔</span><span class="sh-text">ĐÌNH CHỈ, THU HỒI GIẤY PHÉP</span><span class="sh-art">Điều 30–31</span></div>
+  <div class="pr-list">
+    <div class="pr-item"><span class="pr-icon">⚠️</span><div class="pr-text"><strong>Đình chỉ</strong> (tối đa 3 tháng): Vi phạm nội dung phép; lợi dụng phép tổ chức HĐ trái pháp luật.</div></div>
+    <div class="pr-item"><span class="pr-icon">🚫</span><div class="pr-text"><strong>Thu hồi:</strong> Khai báo sai sự thật; giải thể/phá sản/chết; vi phạm QĐ đình chỉ; ảnh hưởng QP-AN; tự trả lại phép.</div></div>
+    <div class="pr-item"><span class="pr-icon">✅</span><div class="pr-text"><strong>Quyền người được cấp phép:</strong> Được NN bảo đảm quyền lợi trong phép; được <strong>bồi thường</strong> nếu phép bị thu hồi vì lý do QP-AN hoặc lợi ích quốc gia.</div></div>
+  </div>
+
+</div><!-- end col 3 -->
+
+
+<!-- CỘT 4: PHƯƠNG ÁN BẢO VỆ + THẨM QUYỀN + ĐIỆN TỬ + CHUYỂN TIẾP -->
+<div class="col">
+
+  <div class="sh teal"><span class="sh-icon">🏛️</span><span class="sh-text">THẨM QUYỀN CẤP PHÉP</span><span class="sh-art">Điều 18</span></div>
+  <div class="auth-box">
+    <div class="auth-row"><span class="auth-icon">👔</span><div><div class="auth-title">Chủ tịch UBND cấp Tỉnh</div><div class="auth-desc">Cấp, cấp lại, gia hạn, điều chỉnh, đình chỉ, thu hồi GP cho các HĐ trong phạm vi bảo vệ CT TL trên địa bàn.</div></div></div>
+    <div class="auth-row"><span class="auth-icon">🏡</span><div><div class="auth-title">Chủ tịch UBND cấp Xã (khi được phân cấp)</div><div class="auth-desc">Thực hiện đầy đủ các thủ tục khi được UBND tỉnh phân cấp. Nộp HS tại Bộ phận Một cửa, Cổng DVC quốc gia hoặc bưu chính.</div></div></div>
+  </div>
+
+  <div class="sh teal"><span class="sh-icon">🛡️</span><span class="sh-text">THỦ TỤC PHÊ DUYỆT PHƯƠNG ÁN BẢO VỆ CT</span><span class="sh-art">Điều 13–14</span></div>
+  <div class="flow">
+    <div class="fs"><div class="fs-num">1</div><div class="fs-title">Nộp hồ sơ</div><div class="fs-desc">Tờ trình + dự thảo PA + bản vẽ/sơ họa + ý kiến liên quan. Trực tiếp, trực tuyến hoặc bưu chính</div></div>
+    <div class="fa">›</div>
+    <div class="fs"><div class="fs-num">2</div><div class="fs-title">Kiểm tra HS</div><div class="fs-desc">Ngay (nộp TT) hoặc <strong>1 ngày LV</strong> (trực tuyến/bưu chính)</div></div>
+    <div class="fa">›</div>
+    <div class="fs"><div class="fs-num">3</div><div class="fs-title">Thẩm định</div><div class="fs-desc"><strong>Cấp tỉnh:</strong> 22 ngày LV<br><strong>Cấp xã:</strong> 18 ngày LV</div></div>
+    <div class="fa">›</div>
+    <div class="fs"><div class="fs-num">4</div><div class="fs-title">Phê duyệt</div><div class="fs-desc"><strong>Cấp tỉnh:</strong> 3 ngày LV<br><strong>Cấp xã:</strong> 2 ngày LV</div></div>
+  </div>
+  <div class="note">📌 Rà soát, điều chỉnh phương án bảo vệ sau <strong>5 năm</strong> hoặc khi chủ sở hữu yêu cầu. Đất đã được CQTQ giao: chủ đầu tư tự lập, phê duyệt và tổ chức thực hiện phương án cắm mốc.</div>
+
+  <div class="sh teal"><span class="sh-icon">📋</span><span class="sh-text">NỘI DUNG PHƯƠNG ÁN BẢO VỆ (Mẫu 03/Phụ lục II)</span><span class="sh-art">Điều 13–14</span></div>
+  <div class="pr-list">
+    <div class="pr-item"><span class="pr-icon">🗺️</span><div class="pr-text">Sơ đồ mặt bằng, chỉ giới bảo vệ; tình hình quản lý, khai thác CT.</div></div>
+    <div class="pr-item"><span class="pr-icon">📋</span><div class="pr-text">Chế độ kiểm tra, báo cáo định kỳ; giới hạn tải trọng PT; quy định PCCC, bảo vệ kho vật liệu nổ/chất độc hại.</div></div>
+    <div class="pr-item"><span class="pr-icon">👮</span><div class="pr-text">Tổ chức lực lượng bảo vệ; kiểm soát người &amp; PT ra vào; phòng ngừa, xử lý hành vi xâm phạm.</div></div>
+    <div class="pr-item"><span class="pr-icon">⚡</span><div class="pr-text">Xử lý khi CT có sự cố hoặc nguy cơ sự cố. <strong>Đập/hồ quan trọng ĐB:</strong> Lực lượng chuyên trách, canh gác 24/7, trang bị phương tiện tuần tra, phương án xử lý tình huống an ninh, QP.</div></div>
+  </div>
+
+  <div class="sh teal"><span class="sh-icon">💻</span><span class="sh-text">GIẤY PHÉP ĐIỆN TỬ CÓ GIÁ TRỊ PHÁP LÝ</span><span class="sh-art">Điều 27</span></div>
+  <div class="elec-box">
+    <div class="elec-icon">🔏</div>
+    <div>
+      <div class="elec-title">GP điện tử có chữ ký số hoặc ký điện tử hợp lệ = Giá trị pháp lý tương đương bản giấy</div>
+      <div class="elec-desc">Cấp qua hệ thống DVC trực tuyến. Sử dụng hợp pháp trong mọi giao dịch theo quy định pháp luật đối với 8 HĐ tại Điều 15.</div>
+    </div>
+  </div>
+
+  <div class="sh gold"><span class="sh-icon">🔍</span><span class="sh-text">KIỂM TRA, THANH TRA & CHUYỂN TIẾP</span><span class="sh-art">Điều 32–34</span></div>
+  <div class="tr-list">
+    <div class="tr-item"><span class="tr-icon">🏛️</span><span><strong>Kiểm tra:</strong> Bộ NN&amp;MT (toàn quốc) · UBND tỉnh (địa phương) · UBND xã (địa bàn xã).</span></div>
+    <div class="tr-item"><span class="tr-icon">📅</span><span>Hiệu lực từ <strong>25/01/2026</strong>. Thay thế NĐ 67/2018 và NĐ 40/2023.</span></div>
+    <div class="tr-item"><span class="tr-icon">✅</span><span>Hồ sơ tiếp nhận trước 25/01/2026 chưa có kết quả: tiếp tục giải quyết theo quy định cũ (trừ khi đề nghị áp dụng NĐ này).</span></div>
+    <div class="tr-item"><span class="tr-icon">📄</span><span>GP đã cấp trước ngày NĐ hiệu lực: <strong>tiếp tục có hiệu lực đến hết thời hạn ghi trong phép</strong>.</span></div>
+    <div class="tr-item"><span class="tr-icon">🔄</span><span>Phương án bảo vệ CT đã phê duyệt: <strong>tiếp tục thực hiện</strong> đến khi có phương án mới.</span></div>
+    <div class="tr-item"><span class="tr-icon">🗑️</span><span>Bãi bỏ một số khoản NĐ 114/2018 (an toàn đập), NĐ 131/2025 và NĐ 136/2025 về phân quyền lĩnh vực NN&amp;MT.</span></div>
+  </div>
+
+</div><!-- end col 4 -->
+
+</div><!-- end body -->
+
+<div class="footer">
+  <span><strong>NĐ 40/2026/NĐ-CP — Chính phủ ban hành 25/01/2026 · KT. Thủ tướng — PTT Trần Hồng Hà</strong> · Thay thế NĐ 67/2018/NĐ-CP &amp; NĐ 40/2023/NĐ-CP · Hiệu lực 25/01/2026</span>
+  <span>Infographic phổ biến nội bộ — không thay thế văn bản pháp luật gốc · CV 244/CTKTTL-QLNCT ngày 27/03/2026</span>
+</div>
+
+</div>
+</body>
+</html>
