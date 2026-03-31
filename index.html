@@ -342,5 +342,75 @@ body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%
 </div>
 
 </div>
+
+<!-- ZOOM LENS FEATURE -->
+<style>
+#zoom-hint {
+  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+  background: rgba(26,58,107,0.92); color: #fff;
+  font-family: 'Times New Roman', serif; font-size: 13px;
+  padding: 7px 18px; border-radius: 20px; z-index: 9999;
+  pointer-events: none; transition: opacity 0.4s; white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+#zoom-hint.hidden { opacity: 0; }
+#zoom-lens {
+  position: fixed; width: 320px; height: 220px;
+  border: 2.5px solid #1a3a6b; border-radius: 10px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35); overflow: hidden;
+  pointer-events: none; z-index: 9998; display: none; background: #fff;
+}
+#zoom-lens-inner { position: absolute; transform-origin: top left; }
+</style>
+<div id="zoom-hint">🔍 Hover hoặc chạm để phóng to · Click/Tap để ghim/bỏ ghim</div>
+<div id="zoom-lens"><div id="zoom-lens-inner"></div></div>
+<script>
+(function() {
+  const ZOOM=2.8, LW=320, LH=220, OFFSET=24;
+  const hint=document.getElementById('zoom-hint');
+  const lens=document.getElementById('zoom-lens');
+  const inner=document.getElementById('zoom-lens-inner');
+  const page=document.querySelector('.page');
+  let pinned=false, hintTimer, touchActive=false;
+
+  function buildClone() {
+    inner.innerHTML='';
+    const clone=page.cloneNode(true);
+    clone.style.cssText='position:absolute;top:0;left:0;margin:0;transform:scale('+ZOOM+');transform-origin:top left;pointer-events:none;';
+    inner.appendChild(clone);
+    inner.style.width=page.offsetWidth*ZOOM+'px';
+    inner.style.height=page.offsetHeight*ZOOM+'px';
+  }
+  function hideHint() { clearTimeout(hintTimer); hintTimer=setTimeout(()=>hint.classList.add('hidden'),3000); }
+  hideHint();
+  function updateLens(cx,cy) {
+    const vw=window.innerWidth, vh=window.innerHeight;
+    let lx=cx+OFFSET, ly=cy+OFFSET;
+    if(lx+LW>vw-8) lx=cx-LW-OFFSET;
+    if(ly+LH>vh-8) ly=cy-LH-OFFSET;
+    lens.style.left=lx+'px'; lens.style.top=ly+'px';
+    const pr=page.getBoundingClientRect();
+    const px=(cx-pr.left+window.scrollX)*ZOOM-LW/2;
+    const py=(cy-pr.top+window.scrollY)*ZOOM-LH/2;
+    inner.style.left=-Math.max(0,px)+'px';
+    inner.style.top=-Math.max(0,py)+'px';
+  }
+  document.addEventListener('mousemove',function(e){
+    if(pinned)return; if(!inner.firstChild)buildClone();
+    lens.style.display='block'; updateLens(e.clientX,e.clientY);
+  });
+  document.addEventListener('mouseleave',function(){ if(!pinned)lens.style.display='none'; });
+  document.addEventListener('click',function(e){
+    if(lens.contains(e.target))return;
+    if(!pinned){ pinned=true; if(!inner.firstChild)buildClone(); lens.style.display='block'; updateLens(e.clientX,e.clientY); hint.textContent='📌 Đã ghim · Click bất kỳ chỗ nào để bỏ ghim'; hint.classList.remove('hidden'); }
+    else{ pinned=false; lens.style.display='none'; hint.textContent='🔍 Hover hoặc chạm để phóng to · Click/Tap để ghim/bỏ ghim'; hideHint(); }
+  });
+  document.addEventListener('touchstart',function(e){ if(pinned)return; touchActive=true; if(!inner.firstChild)buildClone(); const t=e.touches[0]; lens.style.display='block'; updateLens(t.clientX,t.clientY); hint.classList.remove('hidden'); },{passive:true});
+  document.addEventListener('touchmove',function(e){ if(pinned)return; const t=e.touches[0]; updateLens(t.clientX,t.clientY); },{passive:true});
+  document.addEventListener('touchend',function(e){ if(!touchActive)return; touchActive=false; if(!pinned){ const t=e.changedTouches[0]; pinned=true; updateLens(t.clientX,t.clientY); hint.textContent='📌 Đã ghim · Chạm bất kỳ chỗ nào để bỏ ghim'; hint.classList.remove('hidden'); } else{ pinned=false; lens.style.display='none'; hint.textContent='🔍 Chạm để phóng to · Chạm lại để bỏ ghim'; hideHint(); } },{passive:true});
+  window.addEventListener('resize',function(){ inner.innerHTML=''; if(lens.style.display==='block')buildClone(); });
+})();
+</script>
+
 </body>
 </html>
