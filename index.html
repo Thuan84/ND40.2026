@@ -343,72 +343,328 @@ body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%
 
 </div>
 
-<!-- ZOOM LENS FEATURE -->
-<style>
-#zoom-hint {
-  position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
-  background: rgba(26,58,107,0.92); color: #fff;
-  font-family: 'Times New Roman', serif; font-size: 13px;
-  padding: 7px 18px; border-radius: 20px; z-index: 9999;
-  pointer-events: none; transition: opacity 0.4s; white-space: nowrap;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-#zoom-hint.hidden { opacity: 0; }
-#zoom-lens {
-  position: fixed; width: 320px; height: 220px;
-  border: 2.5px solid #1a3a6b; border-radius: 10px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.35); overflow: hidden;
-  pointer-events: none; z-index: 9998; display: none; background: #fff;
-}
-#zoom-lens-inner { position: absolute; transform-origin: top left; }
-</style>
-<div id="zoom-hint">🔍 Hover hoặc chạm để phóng to · Click/Tap để ghim/bỏ ghim</div>
-<div id="zoom-lens"><div id="zoom-lens-inner"></div></div>
-<script>
-(function() {
-  const ZOOM=2.8, LW=320, LH=220, OFFSET=24;
-  const hint=document.getElementById('zoom-hint');
-  const lens=document.getElementById('zoom-lens');
-  const inner=document.getElementById('zoom-lens-inner');
-  const page=document.querySelector('.page');
-  let pinned=false, hintTimer, touchActive=false;
 
-  function buildClone() {
-    inner.innerHTML='';
-    const clone=page.cloneNode(true);
-    clone.style.cssText='position:absolute;top:0;left:0;margin:0;transform:scale('+ZOOM+');transform-origin:top left;pointer-events:none;';
+
+<!-- ══ CLICK-TO-EXPAND FEATURE ══ -->
+<style>
+.zoomable {
+  cursor: zoom-in;
+  position: relative;
+  transition: outline 0.15s;
+}
+.zoomable:hover {
+  outline: 2px dashed rgba(197,160,40,0.8);
+  outline-offset: 3px;
+}
+.zoomable:hover::after {
+  content: '🔍 Click để phóng to';
+  position: absolute;
+  top: 3px; right: 5px;
+  background: rgba(26,58,107,0.88);
+  color: #ffe08a;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: 'Times New Roman', serif;
+  padding: 2px 8px;
+  border-radius: 10px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Backdrop */
+#zx-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6); z-index: 9990;
+  backdrop-filter: blur(3px);
+}
+
+/* Modal */
+#zx-modal {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  z-index: 9995; background: #fff; border-radius: 14px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.45);
+  width: auto; max-width: 96vw; max-height: 92vh;
+  display: none; flex-direction: column;
+  animation: zx-pop 0.2s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@keyframes zx-pop {
+  from { opacity:0; transform: translate(-50%,-50%) scale(0.88); }
+  to   { opacity:1; transform: translate(-50%,-50%) scale(1); }
+}
+
+#zx-titlebar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px 10px; border-bottom: 2px solid #e8eef8;
+  flex-shrink: 0;
+}
+#zx-title {
+  font-family: 'Times New Roman', serif; font-size: 14px;
+  font-weight: 700; color: #1a3a6b; flex: 1; margin-right: 12px;
+}
+#zx-close {
+  cursor: pointer; width: 28px; height: 28px; border-radius: 50%;
+  background: #f0f4fb; border: none; font-size: 15px; line-height: 28px;
+  text-align: center; transition: background 0.15s; flex-shrink: 0;
+}
+#zx-close:hover { background: #dce8f5; }
+
+#zx-scroll {
+  overflow: auto; padding: 16px; flex: 1;
+  min-width: 0;
+}
+
+/* Content styles inside modal — larger fonts */
+#zx-inner { font-family: 'Times New Roman', serif; }
+#zx-inner { min-width: max-content; }
+#zx-inner table { width: 100%; min-width: max-content; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+#zx-inner table td, #zx-inner table th { white-space: normal; }
+#zx-inner table th { padding: 7px 10px; font-size: 11.5px; font-weight:700; color:#fff; text-align:center; }
+#zx-inner table td { border: 1px solid #c8d8e8; padding: 7px 10px; vertical-align:middle; line-height:1.5; color:#1a2838; font-size:12.5px; }
+#zx-inner table tr:nth-child(even) td { background:#f4f7fb; }
+#zx-inner table td:first-child { font-weight:700; color:#1a3a6b; }
+#zx-inner .gt.blue th  { background:#1a3a6b; }
+#zx-inner .gt.green th { background:#1a6b3a; }
+#zx-inner .gt.teal th  { background:#0a5a6a; }
+#zx-inner .gt.red th   { background:#7a1a1a; }
+#zx-inner .gt.purple th{ background:#4a1a6b; }
+#zx-inner .gt.gold th  { background:#7a5a00; }
+#zx-inner .gt.brown th { background:#5a3a10; }
+
+/* List items */
+#zx-inner .ri, #zx-inner .pr-item {
+  display:flex; gap:8px; align-items:flex-start; padding:8px 10px;
+  border-radius:5px; border-left:3px solid #1a3a6b; background:#f5f8fb; margin-bottom:5px;
+}
+#zx-inner .ri-text, #zx-inner .pr-text { font-size:13px; line-height:1.55; color:#1a2838; }
+#zx-inner .ri-icon, #zx-inner .pr-icon { font-size:14px; flex-shrink:0; }
+
+/* Permit grid */
+#zx-inner .pg { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+#zx-inner .pi { display:flex; gap:8px; align-items:flex-start; background:#f8f5ee; border:1px solid #d8caa0; border-radius:5px; padding:8px 10px; }
+#zx-inner .pi-num { width:20px;height:20px;background:#1a3a6b;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0; }
+#zx-inner .pi-text { font-size:13px; line-height:1.4; }
+
+/* Stat row */
+#zx-inner .stat-row, #zx-inner .stat-row.sf { display:flex; gap:10px; }
+#zx-inner .sb, #zx-inner .stat-box { flex:1; border-radius:7px; padding:12px 10px; text-align:center; }
+#zx-inner .sb-num, #zx-inner .stat-num { font-size:32px; font-weight:700; line-height:1; }
+#zx-inner .sb-unit, #zx-inner .stat-unit { font-size:11px; font-style:italic; color:#3a5070; }
+#zx-inner .sb-desc, #zx-inner .stat-desc { font-size:11.5px; color:#3a4a5a; margin-top:4px; line-height:1.35; }
+#zx-inner .sb.blue, #zx-inner .stat-box.blue   { background:#e8f0f8; border:1px solid #9ab8d8; }
+#zx-inner .sb.green, #zx-inner .stat-box.green  { background:#e8f5ec; border:1px solid #8ec8a0; }
+#zx-inner .sb.gold, #zx-inner .stat-box.gold    { background:#fdf5e0; border:1px solid #d4b040; }
+#zx-inner .sb.red, #zx-inner .stat-box.red      { background:#faeaea; border:1px solid #d09090; }
+#zx-inner .sb.teal, #zx-inner .stat-box.teal    { background:#e0f5f0; border:1px solid #80c8b8; }
+#zx-inner .sb.blue .sb-num, #zx-inner .stat-box.blue .stat-num   { color:#1a3a6b; }
+#zx-inner .sb.green .sb-num, #zx-inner .stat-box.green .stat-num { color:#1a6b3a; }
+#zx-inner .sb.gold .sb-num, #zx-inner .stat-box.gold .stat-num   { color:#7a5a00; }
+#zx-inner .sb.red .sb-num, #zx-inner .stat-box.red .stat-num     { color:#7a1a1a; }
+#zx-inner .sb.teal .sb-num, #zx-inner .stat-box.teal .stat-num   { color:#0a5a4a; }
+
+/* Time grid */
+#zx-inner .tt-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+#zx-inner .tt-box { border:1px solid #c0d8c0; border-radius:6px; overflow:hidden; }
+#zx-inner .tt-hdr { background:#0f5a99; color:#fff; font-size:11px; font-weight:700; padding:5px 8px; text-align:center; }
+#zx-inner .tt-row { display:flex; justify-content:space-between; align-items:center; padding:5px 8px; border-bottom:1px solid #eef1f5; font-size:12px; }
+#zx-inner .tt-row:last-child { border-bottom:none; }
+#zx-inner .tt-lbl { color:#3a4a5a; flex:1; }
+#zx-inner .tt-val { font-weight:700; color:#1a3a6b; font-size:13px; }
+
+/* Auth box */
+#zx-inner .auth-box { background:#f8f5ee; border:1px solid #d8caa0; border-radius:6px; padding:10px 12px; }
+#zx-inner .auth-row { display:flex; gap:10px; margin-bottom:8px; align-items:flex-start; }
+#zx-inner .auth-row:last-child { margin-bottom:0; }
+#zx-inner .auth-icon { font-size:20px; flex-shrink:0; }
+#zx-inner .auth-title { font-size:13px; font-weight:700; color:#1a3a6b; margin-bottom:3px; }
+#zx-inner .auth-desc  { font-size:12px; color:#3a3a3a; line-height:1.5; }
+
+/* Flow */
+#zx-inner .flow { display:flex; align-items:stretch; gap:4px; }
+#zx-inner .fs { flex:1; background:#f3f7fb; border:1px solid #c8d8ea; border-radius:6px; padding:10px 8px; text-align:center; }
+#zx-inner .fs-num { width:22px;height:22px;background:#1a4a2a;color:#fff;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 5px; }
+#zx-inner .fs-title { font-size:11px; font-weight:700; color:#1a4a2a; margin-bottom:3px; }
+#zx-inner .fs-desc  { font-size:10.5px; color:#3a4a5a; line-height:1.4; }
+#zx-inner .fa { display:flex;align-items:center;color:#c5a028;font-size:16px;font-weight:700;flex-shrink:0; }
+
+/* Note */
+#zx-inner .note  { background:#fffbe8; border:1px solid #d4c060; border-radius:4px; padding:8px 10px; font-size:12px; color:#3a2800; line-height:1.5; }
+#zx-inner .note-g{ background:#edf8f0; border:1px solid #7ac890; border-radius:4px; padding:8px 10px; font-size:12px; color:#1a3a1a; line-height:1.5; }
+
+/* Zone / scope grids */
+#zx-inner .zg, #zx-inner .zone-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+#zx-inner .zi, #zx-inner .zone-item { background:#f0f5ff; border:1px solid #b0c8e8; border-radius:5px; padding:10px 12px; }
+#zx-inner .zi-label { font-size:11px; font-weight:700; color:#1a3a6b; margin-bottom:3px; }
+#zx-inner .zi-val   { font-size:20px; font-weight:700; color:#0a5a4a; }
+#zx-inner .zi-sub   { font-size:10px; color:#3a4a5a; }
+
+/* Elec box */
+#zx-inner .elec-box { background:linear-gradient(135deg,#e8f5ec,#d0ead8); border:1px solid #6ab87a; border-radius:6px; padding:10px 12px; display:flex; gap:10px; align-items:flex-start; }
+#zx-inner .elec-icon { font-size:26px; flex-shrink:0; }
+#zx-inner .elec-title { font-size:13px; font-weight:700; color:#1a4a1a; margin-bottom:4px; }
+#zx-inner .elec-desc  { font-size:12px; color:#2a4a2a; line-height:1.5; }
+
+/* Transition list */
+#zx-inner .tr-list { display:flex; flex-direction:column; gap:5px; }
+#zx-inner .tr-item { display:flex; gap:7px; align-items:flex-start; padding:7px 10px; background:#fdf5e0; border-left:3px solid #c5a028; border-radius:0 5px 5px 0; font-size:12px; color:#3a2a00; line-height:1.5; }
+#zx-inner .tr-icon { font-size:13px; flex-shrink:0; }
+
+/* Cap wrap */
+#zx-inner .cap-wrap { background:#f0f5fb; border:1px solid #c0d0e4; border-radius:6px; padding:10px 12px; }
+#zx-inner .pc-title { font-size:11px; font-weight:700; color:#1a3a6b; padding:3px 7px; background:#dde8f5; border-radius:3px; margin-bottom:5px; }
+
+/* Scope grid */
+#zx-inner .sg, #zx-inner .scope-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+#zx-inner .si { display:flex; gap:7px; align-items:flex-start; background:#f0f8f2; border:1px solid #a8d0b8; border-radius:5px; padding:8px 10px; }
+#zx-inner .si-icon { font-size:16px; flex-shrink:0; }
+#zx-inner .si-text { font-size:13px; line-height:1.4; }
+
+/* Marker diagram */
+#zx-inner .mk-row { display:flex; gap:12px; align-items:stretch; }
+#zx-inner .mk-diagram { flex-shrink:0; background:#f5faf5; border:1px solid #b0d0b8; border-radius:7px; padding:10px; text-align:center; }
+
+/* Zoom bar */
+#zx-zoombar {
+  display:flex; align-items:center; justify-content:center;
+  gap:10px; padding:10px 16px;
+  border-top:1px solid #e8eef8; flex-shrink:0;
+  background:#fafbfe;
+}
+.zxb {
+  cursor:pointer; padding:4px 14px; border-radius:16px;
+  border:1px solid #9ab8d8; background:#f0f5fb;
+  font-family:'Times New Roman',serif; font-size:13px;
+  color:#1a3a6b; font-weight:700; transition:background 0.15s;
+}
+.zxb:hover { background:#dce8f5; }
+#zx-scale { font-family:'Times New Roman',serif; font-size:12px; color:#6a8aaa; min-width:44px; text-align:center; }
+
+/* Hint */
+#zx-hint {
+  position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+  background:rgba(26,58,107,0.88); color:#fff;
+  font-family:'Times New Roman',serif; font-size:12px;
+  padding:6px 16px; border-radius:20px; z-index:9989;
+  pointer-events:none; transition:opacity 0.5s; white-space:nowrap;
+  box-shadow:0 2px 10px rgba(0,0,0,0.25);
+}
+#zx-hint.hidden { opacity:0; }
+</style>
+
+<div id="zx-backdrop"></div>
+<div id="zx-modal">
+  <div id="zx-titlebar">
+    <span id="zx-title"></span>
+    <button id="zx-close">✕</button>
+  </div>
+  <div id="zx-scroll"><div id="zx-inner"></div></div>
+  <div id="zx-zoombar">
+    <button class="zxb" id="zx-minus">－ Thu nhỏ</button>
+    <span id="zx-scale">100%</span>
+    <button class="zxb" id="zx-plus">＋ Phóng to</button>
+    <button class="zxb" id="zx-reset">⟳ Reset</button>
+  </div>
+</div>
+<div id="zx-hint">🔍 Click vào bảng / khối nội dung bất kỳ để phóng to</div>
+
+<script>
+(function(){
+  var backdrop = document.getElementById('zx-backdrop');
+  var modal    = document.getElementById('zx-modal');
+  var titleEl  = document.getElementById('zx-title');
+  var inner    = document.getElementById('zx-inner');
+  var scroll   = document.getElementById('zx-scroll');
+  var closeBtn = document.getElementById('zx-close');
+  var hint     = document.getElementById('zx-hint');
+  var scaleEl  = document.getElementById('zx-scale');
+  var scale    = 1;
+
+  /* Mark ALL direct children of .col that are NOT .sh as zoomable */
+  document.querySelectorAll('.col > *').forEach(function(el){
+    if(el.classList.contains('sh')) return; // skip headers
+    el.classList.add('zoomable');
+  });
+
+  /* Open */
+  function openModal(el){
+    // Find nearest preceding .sh for title
+    var title = '';
+    var prev  = el.previousElementSibling;
+    while(prev){
+      if(prev.classList.contains('sh')){
+        var t = prev.querySelector('.sh-text');
+        if(t) title = t.textContent.trim();
+        break;
+      }
+      prev = prev.previousElementSibling;
+    }
+    titleEl.textContent = title || 'Chi tiết nội dung';
+
+    inner.innerHTML = '';
+    var clone = el.cloneNode(true);
+    clone.classList.remove('zoomable');
+    // remove hover::after pseudo by removing class
     inner.appendChild(clone);
-    inner.style.width=page.offsetWidth*ZOOM+'px';
-    inner.style.height=page.offsetHeight*ZOOM+'px';
+
+    scale = 1;
+
+    backdrop.style.display = 'block';
+    modal.style.display    = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    // Auto-size modal to fit content naturally
+    requestAnimationFrame(function(){
+      var naturalW = inner.scrollWidth + 56; // 56 = padding both sides
+      var maxW     = window.innerWidth * 0.96;
+      modal.style.width = Math.min(naturalW, maxW) + 'px';
+      applyScale();
+    });
   }
-  function hideHint() { clearTimeout(hintTimer); hintTimer=setTimeout(()=>hint.classList.add('hidden'),3000); }
-  hideHint();
-  function updateLens(cx,cy) {
-    const vw=window.innerWidth, vh=window.innerHeight;
-    let lx=cx+OFFSET, ly=cy+OFFSET;
-    if(lx+LW>vw-8) lx=cx-LW-OFFSET;
-    if(ly+LH>vh-8) ly=cy-LH-OFFSET;
-    lens.style.left=lx+'px'; lens.style.top=ly+'px';
-    const pr=page.getBoundingClientRect();
-    const px=(cx-pr.left+window.scrollX)*ZOOM-LW/2;
-    const py=(cy-pr.top+window.scrollY)*ZOOM-LH/2;
-    inner.style.left=-Math.max(0,px)+'px';
-    inner.style.top=-Math.max(0,py)+'px';
+
+  function closeModal(){
+    backdrop.style.display = 'none';
+    modal.style.display    = 'none';
+    document.body.style.overflow = '';
   }
-  document.addEventListener('mousemove',function(e){
-    if(pinned)return; if(!inner.firstChild)buildClone();
-    lens.style.display='block'; updateLens(e.clientX,e.clientY);
+
+  function applyScale(){
+    scaleEl.textContent = Math.round(scale * 100) + '%';
+    inner.style.transform = 'scale(' + scale + ')';
+    inner.style.transformOrigin = 'top left';
+    if(inner.firstChild){
+      inner.style.width  = (inner.firstChild.scrollWidth  * scale) + 'px';
+      inner.style.height = (inner.firstChild.scrollHeight * scale) + 'px';
+    }
+  }
+
+  document.getElementById('zx-plus') .addEventListener('click', function(){ scale = Math.min(4, +(scale + 0.25).toFixed(2)); applyScale(); });
+  document.getElementById('zx-minus').addEventListener('click', function(){ scale = Math.max(0.4, +(scale - 0.25).toFixed(2)); applyScale(); });
+  document.getElementById('zx-reset').addEventListener('click', function(){ scale = 1; applyScale(); });
+
+  /* Click to open */
+  document.addEventListener('click', function(e){
+    if(modal.style.display === 'flex'){
+      if(!modal.contains(e.target)) closeModal();
+      return;
+    }
+    var t = e.target;
+    while(t && t !== document.body){
+      if(t.classList && t.classList.contains('zoomable')){
+        e.stopPropagation();
+        openModal(t);
+        return;
+      }
+      t = t.parentElement;
+    }
   });
-  document.addEventListener('mouseleave',function(){ if(!pinned)lens.style.display='none'; });
-  document.addEventListener('click',function(e){
-    if(lens.contains(e.target))return;
-    if(!pinned){ pinned=true; if(!inner.firstChild)buildClone(); lens.style.display='block'; updateLens(e.clientX,e.clientY); hint.textContent='📌 Đã ghim · Click bất kỳ chỗ nào để bỏ ghim'; hint.classList.remove('hidden'); }
-    else{ pinned=false; lens.style.display='none'; hint.textContent='🔍 Hover hoặc chạm để phóng to · Click/Tap để ghim/bỏ ghim'; hideHint(); }
-  });
-  document.addEventListener('touchstart',function(e){ if(pinned)return; touchActive=true; if(!inner.firstChild)buildClone(); const t=e.touches[0]; lens.style.display='block'; updateLens(t.clientX,t.clientY); hint.classList.remove('hidden'); },{passive:true});
-  document.addEventListener('touchmove',function(e){ if(pinned)return; const t=e.touches[0]; updateLens(t.clientX,t.clientY); },{passive:true});
-  document.addEventListener('touchend',function(e){ if(!touchActive)return; touchActive=false; if(!pinned){ const t=e.changedTouches[0]; pinned=true; updateLens(t.clientX,t.clientY); hint.textContent='📌 Đã ghim · Chạm bất kỳ chỗ nào để bỏ ghim'; hint.classList.remove('hidden'); } else{ pinned=false; lens.style.display='none'; hint.textContent='🔍 Chạm để phóng to · Chạm lại để bỏ ghim'; hideHint(); } },{passive:true});
-  window.addEventListener('resize',function(){ inner.innerHTML=''; if(lens.style.display==='block')buildClone(); });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+  // Hint auto-hide
+  setTimeout(function(){ hint.classList.add('hidden'); }, 4500);
 })();
 </script>
 
