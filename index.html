@@ -385,9 +385,25 @@ body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%
   transform: translate(-50%,-50%) scale(1);
   z-index: 9995; background: #fff; border-radius: 14px;
   box-shadow: 0 8px 48px rgba(0,0,0,0.45);
-  width: auto; max-width: 96vw; max-height: 92vh;
+  /* PC: auto-size to content; Mobile: full width */
+  width: auto;
+  max-width: min(96vw, 1100px);
+  max-height: 90vh;
+  box-sizing: border-box;
   display: none; flex-direction: column;
   animation: zx-pop 0.2s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+@media (max-width: 600px) {
+  #zx-modal {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: 92vh;
+    border-radius: 14px 14px 0 0;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+  }
 }
 @keyframes zx-pop {
   from { opacity:0; transform: translate(-50%,-50%) scale(0.88); }
@@ -411,15 +427,24 @@ body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%
 #zx-close:hover { background: #dce8f5; }
 
 #zx-scroll {
-  overflow: auto; padding: 16px; flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px; flex: 1;
   min-width: 0;
 }
 
 /* Content styles inside modal — larger fonts */
 #zx-inner { font-family: 'Times New Roman', serif; }
-#zx-inner { min-width: max-content; }
-#zx-inner table { width: 100%; min-width: max-content; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+/* On PC: let inner be as wide as content needs */
+#zx-inner { display: inline-block; min-width: 100%; box-sizing: border-box; }
+#zx-inner table { width: 100%; min-width: max-content; border-collapse: collapse; font-size: 13px; }
 #zx-inner table td, #zx-inner table th { white-space: normal; }
+/* On mobile: inner scrolls inside modal, never overflows viewport */
+@media (max-width: 600px) {
+  #zx-inner { min-width: unset; width: 100%; display: block; }
+  #zx-inner table { min-width: 480px; font-size: 12px; }
+  #zx-inner table td, #zx-inner table th { font-size: 11.5px; padding: 5px 7px; }
+}
 #zx-inner table th { padding: 7px 10px; font-size: 11.5px; font-weight:700; color:#fff; text-align:center; }
 #zx-inner table td { border: 1px solid #c8d8e8; padding: 7px 10px; vertical-align:middle; line-height:1.5; color:#1a2838; font-size:12.5px; }
 #zx-inner table tr:nth-child(even) td { background:#f4f7fb; }
@@ -613,11 +638,16 @@ body { font-family:'Times New Roman',Times,serif; background:#f5f0e8; width:100%
     modal.style.display    = 'flex';
     document.body.style.overflow = 'hidden';
 
-    // Auto-size modal to fit content naturally
+    // Auto-size: on PC fit content, on mobile use CSS (100vw via media query)
     requestAnimationFrame(function(){
-      var naturalW = inner.scrollWidth + 56; // 56 = padding both sides
-      var maxW     = window.innerWidth * 0.96;
-      modal.style.width = Math.min(naturalW, maxW) + 'px';
+      var isMobile = window.innerWidth <= 600;
+      if(!isMobile){
+        var naturalW = inner.scrollWidth + 56;
+        var maxW     = window.innerWidth * 0.96;
+        modal.style.width = Math.min(naturalW, maxW) + 'px';
+      } else {
+        modal.style.width = '';   // let CSS media query handle it
+      }
       applyScale();
     });
   }
